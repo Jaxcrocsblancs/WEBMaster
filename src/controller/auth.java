@@ -13,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import dao.ConnexionBDD;
 
@@ -57,7 +58,6 @@ public class auth extends HttpServlet {
 			System.out.println("Debut while");
 			RequestDispatcher rd = null;
 			while ( resultat.next() ) {
-				System.out.println("boucle");
 				String nomUtilisateur = resultat.getString( "pseudo" );
 			    String motDePasseUtilisateur = resultat.getString( "mdp" );
 			    boolean admin = resultat.getBoolean("admin");
@@ -83,8 +83,6 @@ public class auth extends HttpServlet {
 			    /*AdminFind*/
 			    else  if(name.equalsIgnoreCase(nomUtilisateur) && mdp.equalsIgnoreCase(motDePasseUtilisateur) && admin==true) {
 			    	System.out.println("admin");
-			    	Cookie co = new Cookie("admin", "ok");
-					response.addCookie(co);
 					Statement statement2 = ConnexionBDD.getInstance().getCnx().createStatement();
 			    	ResultSet resultatBis = statement2.executeQuery(laRequette);
 			    	ArrayList<String> listeUser = new ArrayList<String>();
@@ -100,7 +98,10 @@ public class auth extends HttpServlet {
 			        request.setAttribute("listUser", listeUser);
 					request.setAttribute("listMdp", listeMdp);
 					request.setAttribute("listAdmin", listeAdmin);
-			    	rd = request.getRequestDispatcher("EspaceAdmin.jsp") ;
+			    	rd = request.getRequestDispatcher("EspaceAdmin/AcceuilAdmin.jsp") ;
+			    	
+			    	HttpSession session = request.getSession(true); 
+			    	session.setAttribute("Admin", true);
 					//rd.forward(request, response) ;
 			    }
 			}

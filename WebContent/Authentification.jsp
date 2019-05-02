@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="/ze/auth"  method="post">
+<form action="auth"  method="post">
            <p>Nom : <input type="text" name="nom" /></p>
            <p>Mot de Passe : <input type="text" name="mdp" /></p>
            <p><input type="submit"  value="valider" /></p>
