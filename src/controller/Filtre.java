@@ -14,20 +14,19 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 /**
  * Servlet Filter implementation class tes
  */
 @WebFilter(
-		urlPatterns = {"/EspaceAdmin/*"}
+		urlPatterns = {"/EspaceAdmin.jsp"}
 		)
-public class FiltreEspaceAdmin implements Filter {
+public class Filtre implements Filter {
 
     /**
      * Default constructor. 
      */
-    public FiltreEspaceAdmin() {
+    public Filtre() {
         // TODO Auto-generated constructor stub
     }
 
@@ -42,19 +41,21 @@ public class FiltreEspaceAdmin implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-		HttpSession session = ((HttpServletRequest) request).getSession();
-		
-		boolean admin;
-		if(null == session.getAttribute("Admin")){
-			admin= false;
+		HttpServletRequest req = (HttpServletRequest) request;
+		Cookie[] listeCookies = req.getCookies();
+		boolean admin = false;
+		if(listeCookies != null) {
+			for(Cookie c: listeCookies) {
+				String Cname = c.getName();
+				String Cvalue = c.getValue();
+				if(Cname =="admin" && Cvalue =="ok") {
+					admin = true;
+				}
+			
+			}
 		}
-		else { 
-			admin= true;
-		}
-
 		if(!admin) {
-			RequestDispatcher rd =request.getRequestDispatcher("/Authentification.jsp");
+			RequestDispatcher rd =request.getRequestDispatcher("Authentification.jsp");
 			rd.forward(request, response);
 		}
 		chain.doFilter(request, response);

@@ -60,7 +60,7 @@ public class RecupeProduit extends HttpServlet {
 	        request.setAttribute("listProduit", listeProduit);
 			request.setAttribute("listPrix", listePrix);
 			request.setAttribute("listQuantite", listeQuantite);
-			
+
 			HttpSession session = ((HttpServletRequest) request).getSession();
 			
 			boolean admin= false;
@@ -77,8 +77,7 @@ public class RecupeProduit extends HttpServlet {
 			else {
 				rd = request.getRequestDispatcher("EspaceUser.jsp") ;
 			}
-			
-			
+
 			/*Fermeture connexion*/
 			ConnexionBDD.getInstance().closeCnx();
 			if(rd!=null)

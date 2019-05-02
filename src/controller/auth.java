@@ -64,20 +64,22 @@ public class auth extends HttpServlet {
 			    
 			    /*UserFind*/
 			    if(name.equalsIgnoreCase(nomUtilisateur) && mdp.equalsIgnoreCase(motDePasseUtilisateur) && admin==false) {
+
 			    	System.out.println("user");
 			    	rd = request.getRequestDispatcher("/RecupeProduit") ;
 			    	HttpSession session = request.getSession(true);
 			    	session.setAttribute("Admin", false);
 			    	session.setAttribute("id", nomUtilisateur);
+
 			    }
 			    /*AdminFind*/
 			    else  if(name.equalsIgnoreCase(nomUtilisateur) && mdp.equalsIgnoreCase(motDePasseUtilisateur) && admin==true) {
 			    	System.out.println("admin");
 					rd = request.getRequestDispatcher("EspaceAdmin/AcceuilAdmin.jsp") ;
-			    	
 			    	HttpSession session = request.getSession(true); 
 			    	session.setAttribute("Admin", true);
 			    	session.setAttribute("id", nomUtilisateur);
+
 			    }
 			}
 			
