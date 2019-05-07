@@ -23,7 +23,7 @@
 
         <p>Cookie</p>
 
-        <form action="cookie"  method="post">
+        <form action="/ze/cookie"  method="post">
            <p>Nom : <input type="text" name="nom" /></p>
            <p>Value : <input type="text" name="value" /></p>
            <p><input type="submit"  value="valider" /></p>

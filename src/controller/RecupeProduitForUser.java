@@ -16,16 +16,16 @@ import javax.servlet.http.HttpServletResponse;
 import dao.ConnexionBDD;
 
 /**
- * Servlet implementation class RecupeProduit
+ * Servlet implementation class RecupeProduitForUser
  */
-@WebServlet("/RecupeProduit")
-public class RecupeProduit extends HttpServlet {
+@WebServlet("/RecupeProduitForUser")
+public class RecupeProduitForUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public RecupeProduit() {
+    public RecupeProduitForUser() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -43,7 +43,7 @@ public class RecupeProduit extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			String laRequette = "SELECT * FROM `Produit`" ;
+			String laRequette = "SELECT * FROM `Produit` WHERE 1" ;
 			Statement statement2= ConnexionBDD.getInstance().getCnx().createStatement();
 			
 	    	ResultSet resultatBis = statement2.executeQuery(laRequette);
@@ -51,19 +51,22 @@ public class RecupeProduit extends HttpServlet {
 	    	ArrayList<String> listePrix = new ArrayList<String>();
 	    	ArrayList<String> listeQuantite = new ArrayList<String>();
 	    	while ( resultatBis.next() ) {
+	    		System.out.println("Debut while : récupération des produits");
 	    		listeProduit.add(resultatBis.getString( "nom" ));
 	    		listePrix.add(resultatBis.getString( "prix" ));
 	    		listeQuantite.add(resultatBis.getString("quantite"));
+	    		
 	    	}
 	    	
 	        request.setAttribute("listProduit", listeProduit);
 			request.setAttribute("listPrix", listePrix);
 			request.setAttribute("listQuantite", listeQuantite);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/EspaceAdmin/Produit.jsp") ;
+			RequestDispatcher rd = request.getRequestDispatcher("/EspaceUser.jsp") ;
 			/*Fermeture connexion*/
 			ConnexionBDD.getInstance().closeCnx();
-			if(rd!=null)
-				rd.forward(request, response) ;
+			if(rd != null)
+				rd.forward(request, response);
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

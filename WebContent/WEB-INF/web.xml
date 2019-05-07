@@ -31,7 +31,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>Authentification</servlet-name>
-    <url-pattern>/authentification</url-pattern>
+    <url-pattern>/connexion</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>Servlet</servlet-name>
@@ -39,14 +39,116 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>Servlet</servlet-name>
-    <url-pattern>/servlet</url-pattern>
+    <url-pattern>/servelet</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AjouterProduit</servlet-name>
+    <servlet-class>controller.AjouterProduit</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjouterProduit</servlet-name>
+    <url-pattern>/ajoutProduit</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AjouterUser</servlet-name>
+    <servlet-class>controller.AjouterUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjouterUser</servlet-name>
+    <url-pattern>/ajouterUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RecupeProduit</servlet-name>
+    <servlet-class>controller.RecupeProduit</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RecupeProduit</servlet-name>
+    <url-pattern>/recupeProduit</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RecupeUser</servlet-name>
+    <servlet-class>controller.RecupeUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RecupeUser</servlet-name>
+    <url-pattern>/recupeUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RecupePanier</servlet-name>
+    <servlet-class>controller.RecupePanier</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RecupePanier</servlet-name>
+    <url-pattern>/recupePanier</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>SupprimerProduit</servlet-name>
+    <servlet-class>controller.SupprimerProduit</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SupprimerProduit</servlet-name>
+    <url-pattern>/supprimerProduit</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DeleteUser</servlet-name>
+    <servlet-class>controller.SupprimerUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteUser</servlet-name>
+    <url-pattern>/deleteUser</url-pattern>
+  </servlet-mapping>
+  
+  
+  <servlet>
+  	<servlet-name>SupprimerPanier</servlet-name>
+  	<servlet-class>controller.SupprimerPanier</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>SupprimerPanier</servlet-name>
+  	<url-pattern>/SupprimePanier</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RecupeProduitForUser</servlet-name>
+    <servlet-class>controller.RecupeProduitForUser</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RecupeProduitForUser</servlet-name>
+    <url-pattern>/recupeForUser</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>AjouterPanier</servlet-name>
+    <servlet-class>controller.AjouterPanier</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AjouterPanier</servlet-name>
+    <url-pattern>/ajoutPanier</url-pattern>
   </servlet-mapping>
   <filter>
-    <filter-name>Filtre</filter-name>
+    <filter-name>FiltreNormal</filter-name>
     <filter-class>controller.Filtre</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>Filtre</filter-name>
+    <filter-name>FiltreNormal</filter-name>
     <url-pattern>/EspaceAdmin</url-pattern>
   </filter-mapping>
+  <filter>
+    <filter-name>FiltreAdmin</filter-name>
+    <filter-class>controller.FiltreEspaceAdmin</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>FiltreAdmin</filter-name>
+    <url-pattern>/EspaceAdmin/*</url-pattern>
+  </filter-mapping>
+  
+  
+  <error-page>
+        <error-code>404</error-code>
+        <location>/error.jsp</location>
+    </error-page>
+    <error-page>
+        <exception-type>java.lang.Throwable</exception-type>
+        <location>/error.jsp</location>
+    </error-page>
+    
 </web-app>

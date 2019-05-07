@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
+import java.util.TimeZone;
 
 
 public final class ConnexionBDD {
@@ -16,7 +17,7 @@ public final class ConnexionBDD {
 		System.out.println("TEST CONNEXION");
 		try {
 			
-			Properties p = new Properties();
+			/*Properties p = new Properties();
 			p.load(Thread.currentThread().getContextClassLoader().
 						getResourceAsStream("confBDD.properties"));
 
@@ -24,14 +25,18 @@ public final class ConnexionBDD {
 			Class.forName(p.getProperty("driver"));  
 			
 			cnx = DriverManager.getConnection(p.getProperty("url"),
-					p.getProperty("user"), p.getProperty("pwd"));
+					p.getProperty("user"), p.getProperty("pwd"));*/
+			
+			Class.forName("com.mysql.jdbc.Driver");  
+			cnx=DriverManager.getConnection("jdbc:mysql://localhost:3306/my_database?serverTimezone="+
+					TimeZone.getDefault().getID(),"charlotte","lanuel"); 		
 				
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		} catch (IOException e) {
+		} /*catch (IOException e) {
 			e.printStackTrace();
-		} catch (SQLException e) {
+		}*/ catch (SQLException e) {
 			System.out.println("ERREUR SQL");
 			e.printStackTrace();
 		}

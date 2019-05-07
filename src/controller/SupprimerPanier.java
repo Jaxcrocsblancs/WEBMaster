@@ -1,10 +1,7 @@
 package controller;
 
 import java.io.IOException;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,22 +9,23 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.mysql.jdbc.PreparedStatement;
 
 import dao.ConnexionBDD;
 
 /**
- * Servlet implementation class Supprimer
+ * Servlet implementation class SupprimerPanier
  */
-@WebServlet("/SupprimerUser")
-public class SupprimerUser extends HttpServlet {
+@WebServlet("/SupprimerPanier")
+public class SupprimerPanier extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SupprimerUser() {
+    public SupprimerPanier() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,30 +34,36 @@ public class SupprimerUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userb = request.getParameter("userbefore");
-		String user = request.getParameter("user");
-		String mdp = request.getParameter("mdp");
-		String admin = request.getParameter("admin");
+		// TODO Auto-generated method stub
+		HttpSession session = request.getSession();
+		String quantiteb = request.getParameter("quantitebefore");
+		String produit = request.getParameter("produit");
+		String prix = request.getParameter("prix");
+		String quantite = request.getParameter("quantite");		
+		
 		PreparedStatement st;
 		try {
-		if(userb.equalsIgnoreCase(user)) {
+		if(quantiteb == quantite) {
 			System.out.println("suppresion");
-			st = (PreparedStatement) ConnexionBDD.getInstance().getCnx().prepareStatement("delete from User where pseudo=?");
-			st.setString(1, userb);
+			st = (PreparedStatement) ConnexionBDD.getInstance().getCnx().prepareStatement("delete from `Panier` where user=? and nom = ?");
+			st.setString(1, (String) session.getAttribute("nom"));
+			st.setString(2, produit);
+			
 		}
 		else {
 			System.out.println("modification");
-			st = (PreparedStatement) ConnexionBDD.getInstance().getCnx().prepareStatement("UPDATE User SET pseudo=?,mdp=?,admin=? WHERE pseudo=?");
-			st.setString(1, user);
-			st.setString(2, mdp);
-			st.setBoolean(3,Boolean.getBoolean(admin));
-			st.setString(4, userb);
+			st = (PreparedStatement) ConnexionBDD.getInstance().getCnx().prepareStatement("UPDATE `Panier` WHERE user = ? SET nom=?,prix=?,quantite=? WHERE quantite=?");
+			st.setString(1, (String) session.getAttribute("nom"));
+			st.setString(2, produit);
+			st.setString(3, prix);
+			st.setString(4,quantite);
+			st.setInt(5, Integer.parseInt(quantiteb));
 		}
 				
 			st.executeUpdate(); 
 			System.out.println("fin insersion");
 			ConnexionBDD.getInstance().closeCnx();
-			RequestDispatcher rd = request.getRequestDispatcher("/RecupeUser") ;
+			RequestDispatcher rd = request.getRequestDispatcher("/AccueilUser.jsp") ;
 			if(rd!=null)
 				rd.forward(request, response) ;
 		} catch (SQLException e) {

@@ -7,25 +7,34 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="style.css">
 <title>User</title>
 </head>
 <body>
 <table border=1>
 <caption>ListeProduit:</caption>
+<tr><td>Référence</td>
+	<td>Prix</td>
+	<td>Quantité</td>
+</tr>
 <%
-	ArrayList<String> listNom   =  new ArrayList<String>(); 
+	ArrayList<String> listProduit   =  new ArrayList<String>(); 
  	ArrayList<Integer> listPrix = new ArrayList<Integer>();
-    listNom  = (ArrayList<String>) request.getAttribute("listProduit");
+ 	ArrayList<Integer> listQuantite = new ArrayList<Integer>();
+    listProduit = (ArrayList<String>) request.getAttribute("listProduit");
     listPrix = (ArrayList<Integer>) request.getAttribute("listPrix");
-    listNom.add("test");
-    listPrix.add(10);
+    listQuantite = (ArrayList<Integer>) request.getAttribute("listQuantite");
     
-    if(listNom==null){
+    
+    if(listProduit==null){
        
     }else{
-    	for(int i=0; i<listNom.size();i++){
-    		%><tr><td><%=listNom.get(i) %> </td>
-    		<td><%=listPrix.get(i) %> </td></tr><%
+    	for(int i=0; i<listProduit.size();i++){
+    		%><tr><form method="post" action="/ProjetWeb/AjouterPanier">
+    		<td><input type="text" id="nom" name="produit" value="<%=listProduit.get(i) %>"> </td>
+    		<td><input type="text" id="prix" name="prix" value="<%=listPrix.get(i) %>"> </td>
+    		<td><input type="number" id="quantite" name="quantite" min="0" max="10"></td>
+    		<td><input type="submit" value="Ajouter au panier"> </td></form></tr><%
     		}
 		
     }     

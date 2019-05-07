@@ -42,16 +42,10 @@ public class FiltreEspaceAdmin implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-
-		HttpSession session = ((HttpServletRequest) request).getSession();
-		
-		boolean admin;
-		if(null == session.getAttribute("Admin")){
-			admin= false;
-		}
-		else { 
-			admin= true;
-		}
+		HttpSession session = ((HttpServletRequest) request).getSession(true); 
+		boolean admin = (boolean) session.getAttribute("Admin");
+		admin = true;
+		HttpServletRequest req = (HttpServletRequest) request;
 
 		if(!admin) {
 			RequestDispatcher rd =request.getRequestDispatcher("/Authentification.jsp");

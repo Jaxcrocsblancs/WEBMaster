@@ -4,13 +4,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="style.css">
+<title>Accueil admin</title>
 </head>
 <body>
-<form action="RecupeProduit" method="post">
+<form action="/ProjetWeb/RecupeProduit" method="post">
 <p><input type="submit"  value="Produit" ></p>
 </form> 
-<form action="RecupeUser" method="post">
+<form action="/ProjetWeb/RecupeUser" method="post">
 <p><input type="submit"  value="User" ></p>
 </form> 
 </body>

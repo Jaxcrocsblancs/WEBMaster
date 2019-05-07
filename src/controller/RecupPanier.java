@@ -12,22 +12,21 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.mysql.jdbc.PreparedStatement;
+import javax.servlet.http.HttpSession;
 
 import dao.ConnexionBDD;
 
 /**
- * Servlet implementation class Supprimer
+ * Servlet implementation class RecupPanier
  */
-@WebServlet("/SupprimerUser")
-public class SupprimerUser extends HttpServlet {
+@WebServlet("/RecupPanier")
+public class RecupPanier extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SupprimerUser() {
+    public RecupPanier() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,33 +35,33 @@ public class SupprimerUser extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userb = request.getParameter("userbefore");
-		String user = request.getParameter("user");
-		String mdp = request.getParameter("mdp");
-		String admin = request.getParameter("admin");
-		PreparedStatement st;
+		// TODO Auto-generated method stub
+		
+		HttpSession session = request.getSession();
 		try {
-		if(userb.equalsIgnoreCase(user)) {
-			System.out.println("suppresion");
-			st = (PreparedStatement) ConnexionBDD.getInstance().getCnx().prepareStatement("delete from User where pseudo=?");
-			st.setString(1, userb);
-		}
-		else {
-			System.out.println("modification");
-			st = (PreparedStatement) ConnexionBDD.getInstance().getCnx().prepareStatement("UPDATE User SET pseudo=?,mdp=?,admin=? WHERE pseudo=?");
-			st.setString(1, user);
-			st.setString(2, mdp);
-			st.setBoolean(3,Boolean.getBoolean(admin));
-			st.setString(4, userb);
-		}
-				
-			st.executeUpdate(); 
-			System.out.println("fin insersion");
+			String laRequette = "SELECT * FROM `Panier` WHERE user = '" + session.getAttribute("nom") + "'" ;
+			Statement statement2= ConnexionBDD.getInstance().getCnx().createStatement();
+			
+	    	ResultSet resultatBis = statement2.executeQuery(laRequette);
+	    	ArrayList<String> listeProduit = new ArrayList<String>();
+	    	ArrayList<String> listePrix = new ArrayList<String>();
+	    	ArrayList<String> listeQuantite = new ArrayList<String>();
+	    	while ( resultatBis.next() ) {
+	    		listeProduit.add(resultatBis.getString( "nom" ));
+	    		listePrix.add(resultatBis.getString( "prix" ));
+	    		listeQuantite.add(resultatBis.getString("quantite"));
+	    	}
+	    	
+	        request.setAttribute("listProduit", listeProduit);
+			request.setAttribute("listPrix", listePrix);
+			request.setAttribute("listQuantite", listeQuantite);
+			RequestDispatcher rd = request.getRequestDispatcher("/Panier.jsp") ;
+			/*Fermeture connexion*/
 			ConnexionBDD.getInstance().closeCnx();
-			RequestDispatcher rd = request.getRequestDispatcher("/RecupeUser") ;
 			if(rd!=null)
 				rd.forward(request, response) ;
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

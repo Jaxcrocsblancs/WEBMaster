@@ -13,7 +13,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import dao.ConnexionBDD;
 
@@ -58,28 +57,57 @@ public class auth extends HttpServlet {
 			System.out.println("Debut while");
 			RequestDispatcher rd = null;
 			while ( resultat.next() ) {
+				System.out.println("boucle");
 				String nomUtilisateur = resultat.getString( "pseudo" );
 			    String motDePasseUtilisateur = resultat.getString( "mdp" );
 			    boolean admin = resultat.getBoolean("admin");
 			    
 			    /*UserFind*/
 			    if(name.equalsIgnoreCase(nomUtilisateur) && mdp.equalsIgnoreCase(motDePasseUtilisateur) && admin==false) {
-
-			    	System.out.println("user");
-			    	rd = request.getRequestDispatcher("/RecupeProduit") ;
-			    	HttpSession session = request.getSession(true);
-			    	session.setAttribute("Admin", false);
-			    	session.setAttribute("id", nomUtilisateur);
-
+			    	System.out.println("aze");
+			    	String laRequetteProduit = "SELECT * FROM `Produit` WHERE 1" ;
+			    	Statement statement2 = ConnexionBDD.getInstance().getCnx().createStatement();
+			    	ResultSet resultatBis = statement2.executeQuery(laRequetteProduit);
+			    	ArrayList<String> listeNom = new ArrayList<String>();
+			    	ArrayList<Integer> listePrix = new ArrayList<Integer>();
+			    	while ( resultatBis.next() ) {
+			    		listeNom.add(resultatBis.getString( "nom" ));
+			    		listePrix.add(resultatBis.getInt( "prix" ));
+			    		
+			    	}
+			        request.setAttribute("listNom", listeNom);
+					request.setAttribute("listPrix", listePrix);
+					
+					request.getSession().setAttribute("nom",nomUtilisateur);
+					
+			    	rd = request.getRequestDispatcher("/AccueilUser.jsp") ;
+					//rd.forward(request, response) ;
 			    }
 			    /*AdminFind*/
 			    else  if(name.equalsIgnoreCase(nomUtilisateur) && mdp.equalsIgnoreCase(motDePasseUtilisateur) && admin==true) {
 			    	System.out.println("admin");
-					rd = request.getRequestDispatcher("EspaceAdmin/AcceuilAdmin.jsp") ;
-			    	HttpSession session = request.getSession(true); 
-			    	session.setAttribute("Admin", true);
-			    	session.setAttribute("id", nomUtilisateur);
+			    	Cookie co = new Cookie("admin", "ok");
+					response.addCookie(co);
+					Statement statement2 = ConnexionBDD.getInstance().getCnx().createStatement();
+			    	ResultSet resultatBis = statement2.executeQuery(laRequette);
+			    	ArrayList<String> listeUser = new ArrayList<String>();
+			    	ArrayList<String> listeMdp = new ArrayList<String>();
+			    	ArrayList<Boolean> listeAdmin = new ArrayList<Boolean>();
+			    	while ( resultatBis.next() ) {
+			    		listeUser.add(resultatBis.getString( "pseudo" ));
+			    		listeMdp.add(resultatBis.getString( "mdp" ));
+			    		listeAdmin.add(resultatBis.getBoolean("admin"));
+			    		
+			    	}
 
+			        request.setAttribute("listUser", listeUser);
+					request.setAttribute("listMdp", listeMdp);
+					request.setAttribute("listAdmin", listeAdmin);
+					
+					request.getSession().setAttribute("nom",nomUtilisateur);
+					
+			    	rd = request.getRequestDispatcher("/WEB-INF/AcceuilAdmin.jsp") ;
+					//rd.forward(request, response) ;
 			    }
 			}
 			

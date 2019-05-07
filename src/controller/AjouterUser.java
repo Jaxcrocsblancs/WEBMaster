@@ -16,7 +16,7 @@ import com.mysql.jdbc.PreparedStatement;
 import dao.ConnexionBDD;
 
 
-@WebServlet("/Ajouter")
+@WebServlet("/AjouterUser")
 public class AjouterUser extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

@@ -1,0 +1,29 @@
+body {
+	background-color : lightgray;
+	text-align : center;
+}
+
+h1 {
+	
+	font-size : 14 px;
+	font-weight : bold;
+	color : red;
+	text-align : center;
+}
+
+table {
+	align : center;
+	border-style : solid;
+	border-width : 1px;
+}
+
+p {
+	text-align : center;
+}
+
+input[type=submit] {
+	
+	font-family  : Arial; 
+	font-weight : bold;
+	
+}

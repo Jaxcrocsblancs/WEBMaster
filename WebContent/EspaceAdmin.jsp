@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="style.css">
 <title>Admin</title>
 </head>
 <body>
@@ -23,7 +24,7 @@
     	
     	for(int i=0; i<listUser.size();i++){
     		%>
-    		<tr><form action="/ze/Supprimer" method="post">
+    		<tr><form action="/ProjetWeb/Supprimer" method="post">
     			<input type=hidden name="userbefore" value= <%= listUser.get(i) %> > 
     		<td><input type="text" name="user"  value= <%= listUser.get(i) %>> </td>
     		<td><input type="text" name="mdp"  value= <%= listMdp.get(i) %> > </td>
@@ -31,7 +32,7 @@
     		<td><p><input type="submit"  value="Modifier/Supprimer" /></p>
  			</form> </td></tr><%
     	}
-    	%><tr><form action="/ze/Ajouter" method="post">
+    	%><tr><form action="/ProjetWeb/Ajouter" method="post">
 		<td><input type="text" name="user"  > </td>
 		<td><input type="text" name="mdp"  > </td>
 		<td><input type="text" name="admin"  > </td>
